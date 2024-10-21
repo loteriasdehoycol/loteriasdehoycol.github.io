@@ -9,6 +9,25 @@
     <script defer src="index.js"></script>
 </head>
 <body>
+    <h1>Resultados de Loterías de Hoy</h1>
+<div id="resultados"></div>
+
+<script>
+  async function cargarResultados() {
+    let response = await fetch('data.json');
+    let data = await response.json();
+
+    const resultadosDiv = document.getElementById('resultados');
+    resultadosDiv.innerHTML = `<h2>Fecha: ${data.fecha}</h2>`;
+
+    data.loterias.forEach(loteria => {
+      resultadosDiv.innerHTML += `<p>${loteria.nombre}: ${loteria.resultado}</p>`;
+    });
+  }
+
+  cargarResultados();
+</script>
+
     <div class="contenedor">
         <header>
             <img src="logo/logo.png" alt="Logo Principal" class="logo-principal">

@@ -9,6 +9,36 @@
     <script defer src="admin.js"></script>
 </head>
 <body>
+    <h1>Panel de Administración - Loterías</h1>
+<form id="admin-form">
+  <input type="text" id="nombre-loteria" placeholder="Nombre de la lotería" required><br>
+  <input type="text" id="resultado-loteria" placeholder="Resultado (ej: 1234 - Leo)" required><br>
+  <button type="submit">Guardar Resultado</button>
+</form>
+
+<script>
+  const form = document.getElementById('admin-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nombre = document.getElementById('nombre-loteria').value;
+    const resultado = document.getElementById('resultado-loteria').value;
+
+    // Obtener y actualizar data.json
+    let response = await fetch('data.json');
+    let data = await response.json();
+
+    data.loterias.push({ nombre, resultado });
+    data.fecha = new Date().toISOString().split('T')[0];
+
+    // Guardar cambios (esto solo funciona en un servidor backend, no en GitHub Pages)
+    console.log(JSON.stringify(data));  // Puedes usar este JSON para actualizar manualmente.
+
+    alert('Resultado guardado.');
+    form.reset();
+  });
+</script>
+
     <div class="contenedor">
         <header>
             <h1>Panel de Administración LotyCol</h1>
