@@ -1,0 +1,166 @@
+/* Estilos generales */
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor general */
+.contenedor {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #fcffff;
+    box-shadow: 0 0 10px rgba(231, 74, 74, 0.1);
+    border-radius: 10px;
+}
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.login-form label {
+    margin-bottom: 5px;
+}
+
+.login-form input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    background-color: #45a049;
+}
+
+.mensaje {
+    color: red;
+    margin-top: 10px;
+}
+
+
+/* Estilos del encabezado */
+header {
+    background-color: #4CAF50; /* Fondo verde */
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    text-align: center;
+}
+
+/* Alineación del logo */
+header .logo-principal {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+header h1 {
+    margin: 0;
+    color: white;
+    font-size: 40px;
+}
+
+header h2 {
+    margin: 5px 0 0 0;
+    font-size: 20px;
+    color: #ce730b;
+}
+
+/* Resultados */
+.resultados {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.column {
+    width: 45%;
+    background-color: #e3f2fd;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-right: 15px;
+    border-radius: 10px;
+}
+
+.nombre {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.numero {
+    color: green;
+    margin-right: 10px;
+}
+
+.serie {
+    color: red;
+    margin-right: 10px;
+}
+
+.fecha {
+    margin-left: auto;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #777;
+}
+.redes-sociales {
+    margin-top: 10px; /* Espacio entre el título y los iconos */
+}
+
+.redes-sociales a {
+    margin: 0 10px; /* Espacio entre los iconos */
+}
+
+.icono {
+    width: 50px; /* Tamaño de los iconos */
+    height: 30px;
+    object-fit: contain;
+}
+

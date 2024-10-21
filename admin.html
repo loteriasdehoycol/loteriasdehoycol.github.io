@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Loterías y Chances</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="icono/img.png" type="image/png">
+    <script defer src="admin.js"></script>
+</head>
+<body>
+    <div class="contenedor">
+        <header>
+            <h1>Panel de Administración LotyCol</h1>
+            <h2>Loterías y chances de colombia</h2>
+        </header>
+
+        <!-- Contenido del Administrador -->
+        <div id="adminContent">
+            <form id="formulario">
+                <h2>Agregar/Editar Resultados</h2>
+
+                <label for="tipo">Tipo:</label>
+                <select id="tipo" required>
+                    <option value="loterias">Lotería</option>
+                    <option value="chances">Chance</option>
+                </select>
+
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" required placeholder="Ej. Lotería de Bogotá">
+
+                <label for="numero">Número:</label>
+                <input type="text" id="numero" required placeholder="Ej. 1234">
+
+                <label for="serie">Serie:</label>
+                <input type="text" id="serie" required placeholder="Ej. 56">
+
+                <label for="fecha">Fecha del Sorteo:</label>
+                <input type="date" id="fecha" required>
+
+                <label for="logo">Logo:</label>
+                <input type="file" id="logo" accept="image/*" required>
+
+                <button type="submit" id="submitBtn">Agregar Resultado</button>
+            </form>
+
+            <h2>Resultados Actuales</h2>
+            <div class="resultados">
+                <div class="column">
+                    <h3>Loterías</h3>
+                    <ul id="listaLoterias"></ul>
+                </div>
+                <div class="column">
+                    <h3>Chances</h3>
+                    <ul id="listaChances"></ul>
+                </div>
+            </div>
+        </div>
+
+        <button id="logout">Cerrar sesión</button>
+
+        <footer>© 2024 - Loterías y Chances de Colombia. Todos Los Derechos Reservados</footer>
+    </div>
+</body>
+</html>
