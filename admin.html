@@ -9,29 +9,6 @@
     <script defer src="admin.js"></script>
 </head>
 <body>
-<script>
-  const form = document.getElementById('admin-form');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const nombre = document.getElementById('nombre-loteria').value;
-    const resultado = document.getElementById('resultado-loteria').value;
-
-    // Obtener y actualizar data.json
-    let response = await fetch('data.json');
-    let data = await response.json();
-
-    data.loterias.push({ nombre, resultado });
-    data.fecha = new Date().toISOString().split('T')[0];
-
-    // Guardar cambios (esto solo funciona en un servidor backend, no en GitHub Pages)
-    console.log(JSON.stringify(data));  // Puedes usar este JSON para actualizar manualmente.
-
-    alert('Resultado guardado.');
-    form.reset();
-  });
-</script>
-
     <div class="contenedor">
         <header>
             <h1>Panel de Administración LotyCol</h1>
@@ -65,6 +42,7 @@
                 <input type="file" id="logo" accept="image/*" required>
 
                 <button type="submit" id="submitBtn">Agregar Resultado</button>
+                <button id="logout">Cerrar sesión</button>
             </form>
 
             <h2>Resultados Actuales</h2>
@@ -80,7 +58,7 @@
             </div>
         </div>
 
-        <button id="logout">Cerrar sesión</button>
+       
 
         <footer>© 2024 - Loterías y Chances de Colombia. Todos Los Derechos Reservados</footer>
     </div>
