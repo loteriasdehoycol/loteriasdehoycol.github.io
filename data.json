@@ -1,8 +1,8 @@
 {
-    "fecha": "2024-10-21",
+    "fecha": "",
     "loterias": [
-      { "nombre": "Astro Sol", "resultado": "0001 - Aries" },
-      { "nombre": "Astro Luna", "resultado": "9999 - Piscis" }
+      { "nombre": "", "resultado": "" },
+      { "nombre": "", "resultado": "" }
     ]
   }
   
