@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión</title>
+    <title>Inicio de Sesión - Administrador</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,29 +11,30 @@
         <header>
             <h1>Inicio de Sesión</h1>
         </header>
-        <form id="loginForm">
+        <form id="loginForm" class="login-form">
             <label for="password">Contraseña:</label>
             <input type="password" id="password" required>
             <button type="submit">Entrar</button>
-            <p id="mensaje" class="mensaje"></p>
+            <p class="mensaje" id="mensaje"></p>
         </form>
     </div>
     <script>
-        const contrasenaCorrecta = "@ndJos19";
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const password = document.getElementById('password').value;
+        // Contraseña de administrador
+        const contrasenaCorrecta = "@ndJos19"; // Cambia esto por tu contraseña real
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita el envío del formulario
+
+            const password = document.getElementById("password").value;
+            const mensaje = document.getElementById("mensaje");
+
             if (password === contrasenaCorrecta) {
-                localStorage.setItem('isLoggedIn', 'true');
-                window.location.href = 'admin.html';
+                localStorage.setItem('isLoggedIn', 'true'); // Guarda el estado de inicio de sesión
+                window.location.href = "admin.html"; // Redirige a la página de administración
             } else {
-                document.getElementById('mensaje').textContent = 'Contraseña incorrecta.';
+                mensaje.textContent = "Contraseña incorrecta. Intenta de nuevo.";
             }
         });
-
-        window.onload = () => {
-            if (localStorage.getItem('isLoggedIn')) window.location.href = 'admin.html';
-        };
     </script>
 </body>
 </html>
