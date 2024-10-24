@@ -1,13 +1,16 @@
+// Recuperar los resultados del almacenamiento local o inicializar uno vacío
 let resultados = JSON.parse(localStorage.getItem('resultados')) || { loterias: [], chances: [] };
+let editIndex = null; // Para almacenar el índice del resultado que se está editando
+
+// Elementos del DOM
 const listaLoterias = document.getElementById('listaLoterias');
 const listaChances = document.getElementById('listaChances');
 const formulario = document.getElementById('formulario');
-const mensaje = document.getElementById("mensaje");
-
 // Contraseña del admin
 const contrasenaCorrecta = "@ndJos19"; // Cambia esto por tu contraseña real
 
-// Función para mostrar resultados
+
+// Mostrar los resultados actuales en la interfaz
 function mostrarResultados() {
     listaLoterias.innerHTML = '';
     listaChances.innerHTML = '';
@@ -16,11 +19,10 @@ function mostrarResultados() {
         listaLoterias.innerHTML += `
             <li>
                 <img src="${loteria.logo}" alt="${loteria.nombre}" class="logo">
-                <span class="nombre">${loteria.nombre}</span>
-                <span class="numero">${loteria.numero}</span>
-                <span class="serie">${loteria.serie}</span>
-                <span class="fecha">${formatFecha(loteria.fecha)}</span>
-                <button class="eliminar" onclick="eliminarResultado('loteria', ${index})">Eliminar</button>
+                <span>${loteria.nombre} - ${loteria.numero} - ${loteria.serie}</span>
+                <span>${formatFecha(loteria.fecha)}</span>
+                <button onclick="eliminarResultado('loterias', ${index})">Eliminar</button>
+                <button onclick="editarResultado('loterias', ${index})">Editar</button>
             </li>`;
     });
 
@@ -28,75 +30,81 @@ function mostrarResultados() {
         listaChances.innerHTML += `
             <li>
                 <img src="${chance.logo}" alt="${chance.nombre}" class="logo">
-                <span class="nombre">${chance.nombre}</span>
-                <span class="numero">${chance.numero}</span>
-                <span class="serie">${chance.serie}</span>
-                <span class="fecha">${formatFecha(chance.fecha)}</span>
-                <button class="eliminar" onclick="eliminarResultado('chance', ${index})">Eliminar</button>
+                <span>${chance.nombre} - ${chance.numero} - ${chance.serie}</span>
+                <span>${formatFecha(chance.fecha)}</span>
+                <button onclick="eliminarResultado('chances', ${index})">Eliminar</button>
+                <button onclick="editarResultado('chances', ${index})">Editar</button>
             </li>`;
     });
 }
 
-// Función para eliminar resultados
+// Manejar el envío del formulario para agregar o editar un resultado
+formulario.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const tipo = document.getElementById('tipo').value;
+    const nombre = document.getElementById('nombre').value;
+    const numero = document.getElementById('numero').value;
+    const serie = document.getElementById('serie').value;
+    const fecha = document.getElementById('fecha').value;
+    const logoInput = document.getElementById('logo').files[0];
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const nuevoResultado = { nombre, numero, serie, fecha, logo: e.target.result };
+
+        if (editIndex !== null) {
+            // Editar resultado existente
+            resultados[tipo][editIndex] = nuevoResultado;
+            editIndex = null; // Resetear el índice de edición
+        } else {
+            // Agregar nuevo resultado
+            resultados[tipo].push(nuevoResultado);
+        }
+
+        localStorage.setItem('resultados', JSON.stringify(resultados));
+        mostrarResultados();
+        formulario.reset();
+        document.getElementById('submitBtn').textContent = 'Agregar Resultado'; // Restablecer el texto del botón
+    };
+    reader.readAsDataURL(logoInput);
+});
+
+// Eliminar un resultado específico
 function eliminarResultado(tipo, index) {
-    resultados[tipo === 'loteria' ? 'loterias' : 'chances'].splice(index, 1);
+    resultados[tipo].splice(index, 1);
     localStorage.setItem('resultados', JSON.stringify(resultados));
     mostrarResultados();
 }
 
-// Inicio de sesión
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Evita el envío del formulario
-
-    const password = document.getElementById("password").value;
-
-    if (password === contrasenaCorrecta) {
-        document.getElementById("login").style.display = "none"; // Oculta el formulario de login
-        document.getElementById("adminContent").style.display = "block"; // Muestra el contenido del admin
-        mostrarResultados(); // Muestra los resultados al iniciar sesión
-    } else {
-        mensaje.textContent = "Contraseña incorrecta. Intenta de nuevo.";
-    }
-});
-
-// Agregar resultados
-if (formulario) {
-    formulario.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const tipo = document.getElementById('tipo').value;
-        const nombre = document.getElementById('nombre').value;
-        const numero = document.getElementById('numero').value;
-        const serie = document.getElementById('serie').value;
-        const fecha = document.getElementById('fecha').value;
-        const logoInput = document.getElementById('logo').files[0];
-
-        if (logoInput) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const nuevoResultado = {
-                    nombre,
-                    numero,
-                    serie,
-                    fecha,
-                    logo: e.target.result // Guardamos la imagen en base64
-                };
-
-                resultados[tipo === 'loteria' ? 'loterias' : 'chances'].push(nuevoResultado);
-                localStorage.setItem('resultados', JSON.stringify(resultados));
-                mostrarResultados();
-                formulario.reset();
-            };
-            reader.readAsDataURL(logoInput);
-        }
-    });
+// Editar un resultado específico
+function editarResultado(tipo, index) {
+    const resultado = resultados[tipo][index];
+    document.getElementById('tipo').value = tipo; // Seleccionar el tipo correspondiente
+    document.getElementById('nombre').value = resultado.nombre;
+    document.getElementById('numero').value = resultado.numero;
+    document.getElementById('serie').value = resultado.serie;
+    document.getElementById('fecha').value = resultado.fecha;
+    
+    // Preparar el formulario para edición
+    editIndex = index; // Guardar el índice que se está editando
+    document.getElementById('submitBtn').textContent = 'Actualizar Resultado'; // Cambiar el texto del botón
 }
 
-// Formato de fecha
+// Cerrar sesión y redirigir a la página de login
+document.getElementById('logout').addEventListener('click', () => {
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = 'login.html';
+});
+
+// Verificar si el usuario está autenticado
+window.onload = () => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (!isLoggedIn) window.location.href = 'login.html';
+    mostrarResultados();
+};
+
+// Formatear la fecha en un formato más legible
 function formatFecha(fecha) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(fecha).toLocaleDateString('es-ES', options);
 }
-
-// Mostrar resultados al cargar el panel de administración
-window.onload = mostrarResultados;
